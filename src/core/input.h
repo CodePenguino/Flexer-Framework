@@ -5,6 +5,7 @@
 #define MAX_KEYS	512
 #define MAX_MOUSEBUTTONS 8
 #define MAX_BUTTONS 64
+#define MIN_ANALOG_VALUE 0.1
 
 extern bool keys[MAX_KEYS];
 extern bool mouseButtons[MAX_MOUSEBUTTONS];
@@ -13,13 +14,14 @@ extern v2 mouseDelta;
 
 extern int inputControllerUsed;
 extern const float* inputControllerAxes;
-static int inputControllerAxisCount;
-
-static int inputControllerButtonCount;
 extern const unsigned char* inputControllerButtons;
 extern bool isUsingController;
+
+static int inputControllerAxisCount;
+static int inputControllerButtonCount;
 
 bool useController(u8 joystickNum);
 bool isKeyPressed(int keyCode);
 bool isMouseButtonPressed(int button);
-bool isButtonPressed(u16 buttonID);
+bool isControllerButtonPressed(u16 buttonID);
+bool controllerAxisMotion(u8 axis);

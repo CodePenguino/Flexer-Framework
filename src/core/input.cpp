@@ -60,7 +60,17 @@ bool isMouseButtonPressed(int button)
     return false;
 }
 
-bool isButtonPressed(u16 buttonID)
+bool controllerAxisMotion(u8 axis)
+{
+    if(inputControllerAxes[axis] > MIN_ANALOG_VALUE || inputControllerAxes[axis] < -MIN_ANALOG_VALUE)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+bool isControllerButtonPressed(u16 buttonID)
 {
     if(buttonID > MAX_BUTTONS)
     {

@@ -1,8 +1,6 @@
 #include "game.h"
 #include <iostream>
 
-#define MIN_ANALOG_VALUE 0.05
-
 static void processInputs()
 {
     useController(GLFW_JOYSTICK_1);
@@ -29,49 +27,52 @@ static void processInputs()
     
     if(isUsingController)
     {
-        if(inputControllerAxes[0] > MIN_ANALOG_VALUE || inputControllerAxes[0] < -MIN_ANALOG_VALUE)
+        if(controllerAxisMotion(0))
         {
             camera.transform.position.x += inputControllerAxes[0] * Time::delta;
         }
         
-        if(inputControllerAxes[1] > MIN_ANALOG_VALUE || inputControllerAxes[1] < -MIN_ANALOG_VALUE)
+        if(controllerAxisMotion(1))
         {
             camera.transform.position.y -= inputControllerAxes[1] * Time::delta;
         }
-        
-        if(inputControllerAxes[2] > MIN_ANALOG_VALUE || inputControllerAxes[2] < -MIN_ANALOG_VALUE)
-        {
-            ent.transform.rotation = inputControllerAxes[2] * 90.0f;
-        }
-        else
-        {
-            ent.transform.rotation = 0.0f;
-        }
     }
-    
-    std::cerr << Time::delta << std::endl;
 }
 
 static void update()
 {
     render_useShader(spriteShader);
 	
+    // If no controller is being used, rotate to the mouse cursor.
     if(!isUsingController)
     {
         ent.transform.rotation = transform2dComponent_rotateToPoint(v2_screenToViewSpace(mousePosition, camera));
     }
     else
     {
-        // Set the red indicator's position relative to the right analog stick rotation.
-        analogEntity.transform.position = v2(inputControllerAxes[2] * 0.3f, -inputControllerAxes[3] * 0.3f);
-        ent.transform.rotation = transform2dComponent_rotateToPoint(analogEntity.transform.position);
-        render_drawSprite(analogEntity);
+        // Only set the analog stick indicator to move if the right analog stick is moving
+        if(controllerAxisMotion(2) || controllerAxisMotion(3))
+        {
+            // Set the red indicator's position relative to the right analog stick rotation.
+            analogEntity.transform.position = v2(inputControllerAxes[2] * 0.3f, -inputControllerAxes[3] * 0.3f);
+            ent.transform.rotation = transform2dComponent_rotateToPoint(analogEntity.transform.position);
+        }
+        else
+        {
+            analogEntity.transform.position = v2(0.0f, 0.0f);
+            ent.transform.rotation = 0.0f;
+        }
     }
     
-    ent2.transform.position = v2(sinf(Time::globalTimer), cosf(Time::globalTimer));
+    ent2.transform.position = v2(cosf(Time::globalTimer), sinf(2 * Time::globalTimer) / 2);
     
     render_drawSprite(ent2);
     render_drawSprite(ent);
+    
+    if(isUsingController)
+    {
+        render_drawSprite(analogEntity);
+    }
 }
 
 void startGame()
@@ -82,7 +83,7 @@ void startGame()
     
     render_setup(360);
     
-    ecs_init(3, sizeof(SpriteComponent), sizeof(Transform2dComponent), sizeof(Transform3dComponent), sizeof(Camera2dComponent));
+    ecs_init(4, sizeof(SpriteComponent), sizeof(Transform2dComponent), sizeof(Transform3dComponent), sizeof(Camera2dComponent));
     
 	spriteShader = shader_create("../res/shaders/sprite");
     
