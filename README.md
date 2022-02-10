@@ -11,7 +11,7 @@ sudo apt install gcc cmake make libglew-dev libglfw3-dev libglm-dev mesa-utils
 ```
 If you are on an Arch based system, I believe this is done with the following command (not really tested, so this might be wrong:)
 ```
-sudo pacman -S gcc cmake make glew glfw3 glm mesa
+sudo pacman -S gcc cmake make glew glfw glm mesa
 ```
 
 With that set up, all you have to do is just run the following command:
