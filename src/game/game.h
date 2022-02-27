@@ -9,9 +9,12 @@
 #include "../core/time.h"
 #include "../core/math.h"
 
-void startGame();
-void loopGame();
-void stopGame();
+namespace Game
+{
+	void start();
+	void loop();
+	void stop();
+};
 
 static Shader spriteShader;
 static SpriteEntity ent;

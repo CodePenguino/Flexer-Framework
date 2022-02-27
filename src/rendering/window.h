@@ -19,7 +19,7 @@ struct Window
 static Shader backgroundShader;
 
 void window_center(GLFWwindow* window);
-void window_create(u16 width, u16 height, const char* title);
+void window_create(u16 width, u16 height, const char* title, bool fullscreen = false);
 void window_setFunctions(void (*procInputs)(void), void (*upd)(void));
 
 void window_mainloop();

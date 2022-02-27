@@ -2,10 +2,13 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
+namespace Input
+{
+
 bool keys[MAX_KEYS];
 bool mouseButtons[MAX_MOUSEBUTTONS];
-v2 mousePosition;
-v2 mouseDelta;
+glm::vec2 mousePosition;
+glm::vec2 mouseDelta;
 
 int inputControllerUsed;
 const float* inputControllerAxes;
@@ -30,7 +33,7 @@ bool useController(u8 joystickNum)
     return true;
 }
 
-bool isKeyPressed(int keyCode)
+bool keyPressed(int keyCode)
 {
     if(keyCode > MAX_KEYS)
     {
@@ -45,7 +48,7 @@ bool isKeyPressed(int keyCode)
     return false;
 }
 
-bool isMouseButtonPressed(int button)
+bool mouseButtonPressed(int button)
 {
     if(button > MAX_MOUSEBUTTONS)
     {
@@ -70,7 +73,7 @@ bool controllerAxisMotion(u8 axis)
     return false;
 }
 
-bool isControllerButtonPressed(u16 buttonID)
+bool controllerButtonPressed(u16 buttonID)
 {
     if(buttonID > MAX_BUTTONS)
     {
@@ -84,3 +87,5 @@ bool isControllerButtonPressed(u16 buttonID)
     
     return false;
 }
+
+};

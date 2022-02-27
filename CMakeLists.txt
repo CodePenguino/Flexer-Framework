@@ -21,14 +21,17 @@ target_include_directories(Flexer PUBLIC "${Flexer_SOURCE_DIR}/include/")
 # Find the libraries that are being used
 find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
 find_package(OpenGL REQUIRED)
 
 # Link the libraries used
 target_link_libraries(Flexer glfw)
 target_link_libraries(Flexer ${GLEW_LIBRARIES})
+target_link_libraries(Flexer ${GLM_LIBRARIES})
 target_link_libraries(Flexer ${OPENGL_LIBRARIES})
 
 # Include the libraries used
 target_include_directories(Flexer PRIVATE glfw)
 target_include_directories(Flexer PRIVATE ${GLEW_INCLUDE_DIRS})
+target_include_directories(Flexer PRIVATE ${GLM_INCLUDE_DIRS})
 target_include_directories(Flexer PRIVATE ${OPENGL_INCLUDE_DIRS})

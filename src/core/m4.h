@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math.h>
+#include "../common/util.h"
 
 class v4;
 

@@ -1,9 +1,8 @@
 #pragma once
 
 #include <GL/glew.h>
-#include "../../core/v2.h"
-#include "../../core/quat.h"
-#include "../../core/m4.h"
+#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 struct SpriteComponent
 {
@@ -15,20 +14,20 @@ struct SpriteComponent
 
 struct Transform2dComponent
 {
-	v2 position;
-	f32 rotation;
-	v2 scale;
+	glm::vec2 position;
+	float rotation;
+	glm::vec2 scale;
 };
 
 struct Transform3dComponent
 {
-	v3 position;
-	quat rotation;
-	v3 scale;
+	glm::vec3 position;
+	glm::quat rotation;
+	glm::vec3 scale;
 };
 
 struct Camera2dComponent
 {
-    m4 projMat, viewMat;
+	glm::mat4 projMat, viewMat;
     Transform2dComponent transform;
 };
